@@ -160,6 +160,67 @@ h1 {
   color: var(--muted);
 }
 
+.hidden {
+  display: none !important;
+}
+
+.mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mode-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin: 0;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+}
+
+.mode-option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.mode-option span {
+  display: grid;
+  gap: 3px;
+}
+
+.mode-option strong {
+  font-size: 0.95rem;
+}
+
+.mode-option small,
+.wallet-label {
+  color: var(--muted);
+}
+
+.wallet-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  background: rgba(6, 12, 22, 0.68);
+  margin-bottom: 16px;
+}
+
+.wallet-panel strong {
+  display: block;
+  margin-top: 4px;
+  word-break: break-all;
+}
+
 label {
   display: grid;
   gap: 8px;
@@ -364,6 +425,7 @@ button:hover {
 @media (max-width: 960px) {
   .hero,
   .grid,
+  .mode-switch,
   .row-2,
   .row-3,
   .actions,

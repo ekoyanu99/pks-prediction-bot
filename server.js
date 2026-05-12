@@ -5,6 +5,16 @@ const { PredictionBot } = require("./bot");
 
 const PUBLIC_DIR = path.join(__dirname, "public");
 
+function resolveEthersVendorPath() {
+  const ethersEntryPath = require.resolve("ethers");
+  const ethersPackageRoot = path.dirname(path.dirname(ethersEntryPath));
+  const vendorPath = path.join(ethersPackageRoot, "dist", "ethers.umd.min.js");
+
+  return fs.existsSync(vendorPath) ? vendorPath : null;
+}
+
+const ETHERS_VENDOR_PATH = resolveEthersVendorPath();
+
 function contentType(fileName) {
   if (fileName.endsWith(".html")) return "text/html; charset=utf-8";
   if (fileName.endsWith(".css")) return "text/css; charset=utf-8";
@@ -125,6 +135,14 @@ function createServer(defaultConfig = {}) {
         "Content-Type": "application/json; charset=utf-8",
       });
       response.end(JSON.stringify({ ok: true }));
+      return;
+    }
+
+    if (pathname === "/vendor/ethers.umd.min.js" && ETHERS_VENDOR_PATH) {
+      response.writeHead(200, {
+        "Content-Type": "application/javascript; charset=utf-8",
+      });
+      fs.createReadStream(ETHERS_VENDOR_PATH).pipe(response);
       return;
     }
 

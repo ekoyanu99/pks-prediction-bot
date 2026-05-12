@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PKS Prediction Bot</title>
+    <script src="/vendor/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -34,24 +35,42 @@
             </p>
           </div>
 
-          <label>
-            RPC URL
-            <input
-              name="rpcUrl"
-              type="url"
-              placeholder="https://..."
-              required
-            />
-          </label>
+          <div class="mode-switch" role="radiogroup" aria-label="Bot mode">
+            <label class="mode-option">
+              <input type="radio" name="mode" value="privateKey" checked />
+              <span>
+                <strong>Private key</strong>
+                <small>Run the bot from the server</small>
+              </span>
+            </label>
+
+            <label class="mode-option">
+              <input type="radio" name="mode" value="walletConnect" />
+              <span>
+                <strong>Connect wallet</strong>
+                <small>Run the bot from MetaMask in the browser</small>
+              </span>
+            </label>
+          </div>
+
+          <div id="walletPanel" class="wallet-panel hidden">
+            <div>
+              <p class="wallet-label">Connected wallet</p>
+              <strong id="connectedWallet">Not connected</strong>
+            </div>
+            <button type="button" id="connectWalletBtn" class="secondary">
+              Connect Wallet
+            </button>
+          </div>
 
           <label>
+            RPC URL
+            <input name="rpcUrl" type="url" placeholder="https://..." />
+          </label>
+
+          <label id="privateKeyField">
             Private Key
-            <input
-              name="privateKey"
-              type="password"
-              placeholder="0x..."
-              required
-            />
+            <input name="privateKey" type="password" placeholder="0x..." />
           </label>
 
           <div class="row-2">
