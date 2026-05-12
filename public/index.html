@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PKS Prediction Bot</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Prediction Bot Control Room</p>
+          <h1>Run the bot from a dashboard instead of a terminal.</h1>
+          <p class="lede">
+            Configure the wallet, scan for strong targets, start or stop
+            monitoring, and review live logs in one place.
+          </p>
+        </div>
+        <div class="status-card glass">
+          <span class="status-label">Status</span>
+          <strong id="runState">Idle</strong>
+          <p id="statusMeta">Waiting for configuration</p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <form id="configForm" class="panel glass">
+          <div class="panel-head">
+            <h2>Configuration</h2>
+            <p>
+              Use your own RPC URL and private key. Nothing is stored on the
+              server.
+            </p>
+          </div>
+
+          <label>
+            RPC URL
+            <input
+              name="rpcUrl"
+              type="url"
+              placeholder="https://..."
+              required
+            />
+          </label>
+
+          <label>
+            Private Key
+            <input
+              name="privateKey"
+              type="password"
+              placeholder="0x..."
+              required
+            />
+          </label>
+
+          <div class="row-2">
+            <label>
+              Bet Amount (BNB)
+              <input
+                name="betAmount"
+                type="number"
+                min="0"
+                step="0.0001"
+                placeholder="0.004"
+              />
+            </label>
+
+            <label>
+              Gas Price (Gwei)
+              <input
+                name="gasPriceGwei"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="0.1"
+              />
+            </label>
+          </div>
+
+          <div class="row-2">
+            <label>
+              Claim Gas Price (Gwei)
+              <input
+                name="claimGasPriceGwei"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="3"
+              />
+            </label>
+
+            <label>
+              Target Address
+              <input name="targetAddress" type="text" placeholder="0x..." />
+            </label>
+          </div>
+
+          <div class="toggles">
+            <label class="toggle">
+              <input name="autoTarget" type="checkbox" />
+              <span>Pick target automatically from the scanner</span>
+            </label>
+
+            <label class="toggle">
+              <input name="autoClaim" type="checkbox" checked />
+              <span>Auto-claim winnings</span>
+            </label>
+          </div>
+
+          <div class="row-3">
+            <label>
+              Polling Interval (ms)
+              <input
+                name="pollingIntervalMs"
+                type="number"
+                min="500"
+                step="100"
+                placeholder="3500"
+              />
+            </label>
+
+            <label>
+              Sleep After Bet (ms)
+              <input
+                name="sleepAfterBetMs"
+                type="number"
+                min="0"
+                step="1000"
+                placeholder="210000"
+              />
+            </label>
+
+            <label>
+              Catch-up Blocks
+              <input
+                name="catchUpBlocks"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="100"
+              />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="primary">Start Bot</button>
+            <button type="button" id="stopBtn" class="secondary">Stop</button>
+            <button type="button" id="scanBtn" class="ghost">
+              Scan Winners
+            </button>
+          </div>
+
+          <p class="note">
+            This dashboard is designed for local use. Do not expose it publicly
+            without authentication.
+          </p>
+        </form>
+
+        <section class="panel glass">
+          <div class="panel-head">
+            <h2>Live Summary</h2>
+            <p>
+              Track the currently active wallet, target, and last known
+              progress.
+            </p>
+          </div>
+
+          <div class="summary-grid">
+            <div class="metric">
+              <span>Wallet</span><strong id="walletValue">-</strong>
+            </div>
+            <div class="metric">
+              <span>Target</span><strong id="targetValue">-</strong>
+            </div>
+            <div class="metric">
+              <span>Last Epoch</span><strong id="epochValue">-</strong>
+            </div>
+            <div class="metric">
+              <span>Last Block</span><strong id="blockValue">-</strong>
+            </div>
+          </div>
+
+          <div class="wins">
+            <div class="wins-head">
+              <h3>Top Winners</h3>
+              <span id="winnerCount">0 results</span>
+            </div>
+            <div id="winnerList" class="winner-list"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel glass logs-panel">
+        <div class="panel-head">
+          <h2>Event Log</h2>
+          <p>Every action from the bot appears here.</p>
+        </div>
+        <div id="logStream" class="log-stream"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

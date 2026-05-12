@@ -1,0 +1,18 @@
+{
+  "name": "pks-prediction-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "check": "node --check index.js && node --check bot.js && node --check server.js && node --check scanner.js && node --check public/app.js",
+    "test": "npm run check"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "ethers": "^6.16.0"
+  }
+}
